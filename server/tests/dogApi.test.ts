@@ -8,6 +8,16 @@ describe('Dog API', () => {
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('success', true);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body.data).toHaveProperty('imageUrl');
+        expect(typeof response.body.data.imageUrl).toBe('string');
+    });
+
+    test('Invalid route', async () => {
+        const response = await request(app).get('/api/dogs/invalid');
+
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error', "Route not found");
     });
 
 });
